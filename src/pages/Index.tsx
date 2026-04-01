@@ -1,16 +1,41 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useFinanceStore } from "@/store/useFinanceStore";
+import AppShell from "@/components/layout/AppShell";
+import SummaryCards from "@/components/dashboard/SummaryCards";
+import BalanceTrendChart from "@/components/dashboard/BalanceTrendChart";
+import SpendingBreakdown from "@/components/dashboard/SpendingBreakdown";
+import TransactionsTable from "@/components/transactions/TransactionsTable";
+import InsightsPanel from "@/components/insights/InsightsPanel";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const { activeTab } = useFinanceStore();
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <AppShell>
+      {activeTab === "dashboard" && (
+        <div className="space-y-6">
+          <SummaryCards />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <BalanceTrendChart />
+            <SpendingBreakdown />
+          </div>
+          <TransactionsTable />
+        </div>
+      )}
+
+      {activeTab === "transactions" && (
+        <div className="space-y-6">
+          <TransactionsTable />
+        </div>
+      )}
+
+      {activeTab === "insights" && (
+        <div className="space-y-6">
+          <SummaryCards />
+          <InsightsPanel />
+        </div>
+      )}
+    </AppShell>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
